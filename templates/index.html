@@ -1,27 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello world Page</title>
-</head>
-<body>
-    <ol>
-        <h1>Courses</h1>
-    {%for courses in course%}
-   <li>
-    <h2>{{courses}}</h2>
-   </li>
-    {%endfor%}
-    </ol>
 
-    <ul>
-           <h1>Student details</h1>
-    {%for key,value in student.items()%}
-   <li>
-    <h2>{{key}}:{{value}}</h2>
-   </li>
-    {%endfor%}
-    </ul>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Welcome to Flask Course</h2>
+    <p>This is Home page</p>
+{% endblock %}
