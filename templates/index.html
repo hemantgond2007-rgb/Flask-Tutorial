@@ -6,13 +6,18 @@
     <title>Hello world Page</title>
 </head>
 <body>
-   {#<p>{{"Welcome "+ first_name}}</p>#}
-    <h1>Hello, {{first_name|upper}} {{Last_name |lower}}</h1>
-    <h2>{{"mohit kumar"|title}}</h2>
-    <h2> Total course:{{course |length}}</h2>
-    <h2>Age:{{age}}</h2>
-    <h2>original price:{{price}}</h2>
-    <h4>GST Included Price:{{price+30}}</h4>
-    <p>This is my HTML Page</p>
+   <h1>Welcome</h1>
+   {%if is_loged_in%}
+   <h1>Welcome back !</h1>
+   {%else%}
+   <h1>Please Login</h1>
+   {%endif%}
+
+   {%if marks>=90%}
+   <h1>Grade is A</h1>
+   {%elif marks<=89 %}
+   <h1>Grade is B</h1>
+   {%endif%}
+   
 </body>
 </html>

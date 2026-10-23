@@ -4,22 +4,10 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-   first_name="Rohan"
-   Last_name="Singh"
-   course=["python",
-           "flask",
-           "Django",
-           "Fast Api"]
-   age=20
-   price=500
-   return render_template("index.html",first_name=first_name,
-                          Last_name=Last_name,
-                          course=course,
-                          age=age,
-                          price=price,
-
-                          
-                          )
+   is_loged_in=True
+   marks=75
+   return render_template("index.html",is_loged_in=is_loged_in,
+                          marks=marks)
 
 if __name__=="__main__":
    app.run(debug=True,port=5001)
