@@ -9,8 +9,8 @@ def home():
 @app.route("/about")
 def hemant():
     return render_template("about.html")
-@app.route("/contact")
+@app.route("/contact", methods=["GET","POST"])
 def contact():
     return render_template("contact.html")
 if __name__ == "__main__":
-    app.run(debug=True,port=5002)
+    app.run(debug=True,port=5000)
