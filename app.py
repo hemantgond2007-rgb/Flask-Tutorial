@@ -15,11 +15,8 @@ def contact():
         name=request.form.get("username")
         email=request.form.get("email")
         massage=request.form.get("massage")
-        return f"Hello,{name} your email id is {email} and your massage is {massage} "
+        return render_template("contact.html",name=name)
     return render_template("contact.html")
-@app.route("/search")
-def search():
-    name=request.args.get("query")
-    return f"you search for :{name}"
+
 if __name__ == "__main__":
     app.run(debug=True,port=5001)
