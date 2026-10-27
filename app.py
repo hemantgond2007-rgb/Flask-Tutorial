@@ -1,10 +1,23 @@
 
-from flask import Flask, render_template,request,redirect,url_for,flash
+from flask import Flask, render_template,request,redirect,url_for,flash,session
 
 app = Flask(__name__)
 
 
 app.secret_key="Change-this-in-prod "
+@app.route("/login")
+def  login():
+    session["username"]="Mohit"
+    return "Login successfull !"
+@app.route("/dashboard")
+def dashboard():
+    username=session.get("username",None)
+    if not username:
+        return"login first please !"
+    return f"Welocome {username}"
+@app.route("/logout")
+def logout():
+    return "Logout successfull !"
 
 @app.route("/")
 def home():
@@ -26,4 +39,4 @@ def test():
     result = 10/0
     return str(result)
 if __name__ == "__main__":
-    app.run(debug=False,port=5002)
+    app.run(debug=True,port=5002)
