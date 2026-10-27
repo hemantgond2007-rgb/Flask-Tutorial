@@ -1,10 +1,22 @@
 
 from flask import Flask, render_template,request,redirect,url_for,flash,session
+import os
 
 app = Flask(__name__)
 
 
 app.secret_key="Change-this-in-prod "
+@app.route("/upload",methods=["GET","POST"])
+def upload():
+    if request.method=="POST":
+        file=request.files.get("file")
+        if not file:
+            return "Please select file!"
+        if file.filename=="":
+            return "Please select file!"
+        file.save(os.path.join("uploads",file.filename))
+        return "file uploaded"
+    return render_template("upload.html")
 @app.route("/login")
 def  login():
     session["username"]="Mohit"
@@ -17,8 +29,8 @@ def dashboard():
     return f"Welocome {username}"
 @app.route("/logout")
 def logout():
-    return "Logout successfull !"
-
+      session.pop("username", None)
+      return "Logout successful!"
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -39,4 +51,4 @@ def test():
     result = 10/0
     return str(result)
 if __name__ == "__main__":
-    app.run(debug=True,port=5002)
+    app.run(debug=True,port=5001)
