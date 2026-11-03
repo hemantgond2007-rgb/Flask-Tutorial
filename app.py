@@ -45,9 +45,22 @@ def created_user():
         "user_id": user.id
     })
 
+@app.route("/get_user",methods=["GET"])
+def get_user():
+    users=User.query.all()
+    users_data=[]
+    for user in users:
+        users_data.append({
+            "id":user.id,
+            "name":user.name,
+            "email":user.email,
+            "age":user.age
+        })
+    return jsonify(users_data)
+
 
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
 
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=5002)
