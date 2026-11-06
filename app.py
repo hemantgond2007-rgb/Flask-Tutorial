@@ -66,6 +66,27 @@ def get_user(id):
         "email":user.email,
         "age":user.age
     })
+@app.route("/users/<int:id>",methods=["PATCH"])
+def updated_user(id):
+    data=request.get_json()
+    user=db.get_or_404(User,id)
+    if "name" in data:
+        user.name=data["name"]
+    if "email" in data:
+            user.email=data["email"]
+    if "age" in data:
+            user.age=data["age"]
+    db.session.commit()
+    return jsonify({
+         "massgae":"user updated successfully",
+         "user":{
+              "id":user.id,
+              "name":user.name,
+              "email":user.email,
+              "age":user.age
+         }
+    })
+ 
 
 
 if __name__ == "__main__":
