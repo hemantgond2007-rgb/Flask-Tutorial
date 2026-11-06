@@ -36,7 +36,7 @@ def created_user():
         email=email,
         age=age
     )
-
+    
     db.session.add(user)
     db.session.commit()
 
@@ -86,11 +86,17 @@ def updated_user(id):
               "age":user.age
          }
     })
- 
-
+@app.route("/user/<int:id>",methods=["DELETE"])
+def delete_user(id):
+    user=db.get_or_404(User,id)
+    db.session.delete(user)
+    db.session.commit()
+    return jsonify({
+         "message":"user delete successfully !"
+    })
 
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
 
-    app.run(debug=True, port=5003)
+    app.run(debug=True, port=5002)
