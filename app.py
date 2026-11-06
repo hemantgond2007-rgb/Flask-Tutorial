@@ -45,8 +45,8 @@ def created_user():
         "user_id": user.id
     })
 
-@app.route("/get_user",methods=["GET"])
-def get_user():
+@app.route("/get_users",methods=["GET"])
+def get_users():
     users=User.query.all()
     users_data=[]
     for user in users:
@@ -57,10 +57,19 @@ def get_user():
             "age":user.age
         })
     return jsonify(users_data)
+@app.route("/users/<int:id>")
+def get_user(id):
+    user=db.get_or_404(User,id)
+    return jsonify({
+        "id":user.id,
+        "name":user.name,
+        "email":user.email,
+        "age":user.age
+    })
 
 
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
 
-    app.run(debug=True, port=5002)
+    app.run(debug=True, port=5003)
