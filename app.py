@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask,request,jsonify
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
 from dotenv import load_dotenv
@@ -19,15 +19,47 @@ DATABASE_URL=(
 app.config["SQLALCHEMY_DATABASE_URI"]=DATABASE_URL
 db=SQLAlchemy(app)
 
+class User(db.Model):
+    __tablename__="users"
+    id=db.Column(
+        db.Integer,
+        primary_key=True
+    )
+    name=db.Column(
+        db.String(100),
+        nullable=False
+    )
+    email=db.Column(
+        db.String(100),
+        primary_key=False
+    )
+    age=db.Column(
+        db.Integer
+    )
+
 @app.route("/")
 def home():
-    return "Flask applicatin is running !"
-@app.route("/db_test")
-def db_test():
-    result=db.session.execute(
-        text("SELECT 1")
+    return "Flask applicatin + My SQL is running !"
+
+@app.route("/users",methods=["POST"])
+def creat_user():
+    data=request.get_json()
+    name=data.get("name")
+    age=data.get("age")
+    email=data.get("email")
+
+    user=User(
+        name=name,
+        email=email,
+        age=age,
     )
-    value=result.scalar()
-    return f"My sql connected fine !result :{value}"
+    db.session.add(user)
+    db.session.commit()
+    return jsonify({
+        "message":"user create successfully!",
+        "user_id":user.id
+    }),201
 if __name__=="__main__":
-    app.run(debug=True,port=5000)
+    with app.app_context():
+        db.create_all()
+    app.run(debug=True,port=5001)
